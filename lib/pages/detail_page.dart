@@ -46,7 +46,7 @@ class _DetailPageState extends State<DetailPage> {
       color: MacosTheme.of(context).primaryColor,
       size: 30.0,
     );
-
+    //
     var color = Theme.of(context).textTheme.headline1?.color;
 
     return MacosScaffold(

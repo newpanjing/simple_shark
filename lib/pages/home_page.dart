@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../components/mytabbar.dart';
 import '../components/scroll_view.dart';
+import 'editor_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -48,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                 icon: const Icon(Icons.edit),
                 showLabel: false,
                 onPressed: () {
-                  // Navigator.of(context).push(CupertinoPageRoute(builder: (context)=>const EditorPage()));
+                  Navigator.of(context).push(CupertinoPageRoute(builder: (context)=>const EditorPage()));
                 }),
           ],
         ),
