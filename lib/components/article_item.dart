@@ -18,11 +18,8 @@ class ArticleItem extends StatefulWidget {
 }
 
 class _ArticleItemState extends State<ArticleItem> {
-
-
   @override
   Widget build(BuildContext context) {
-
     var h1 = Theme.of(context).textTheme.headline6;
     var body = Theme.of(context).textTheme.bodyText1;
     var isDark = MacosTheme.of(context).brightness.isDark;
@@ -65,7 +62,13 @@ class _ArticleItemState extends State<ArticleItem> {
                         maxLines: 3,
                       ),
                     ),
-                    ArticleInfo(widget.data["user"], view: widget.data["view"].toString(),reply: widget.data["reply"].toString(),date: widget.data["lastReplied"].toString(),nodeName: widget.data["node"]["title"].toString(),),
+                    ArticleInfo(
+                      widget.data["user"],
+                      view: widget.data["view"].toString(),
+                      reply: widget.data["reply"].toString(),
+                      date: widget.data["lastReplied"].toString(),
+                      nodeName: widget.data["node"]["title"].toString(),
+                    ),
                     // ArticleInfo(Map<String,dynamic>.from(widget.data["user"]), date: "", view: "view", reply: "reply"),
                     const SizedBox(
                       height: 20,

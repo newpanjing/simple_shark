@@ -35,7 +35,6 @@ class _DetailPageState extends State<DetailPage> {
       setState(() {
         isLoading = false;
         data = Map<String, dynamic>.from(value);
-        print(data);
       });
     });
   }
@@ -55,7 +54,7 @@ class _DetailPageState extends State<DetailPage> {
         title: const Text("帖子详情"),
         actions: [
           ToolBarIconButton(
-              icon: Icon(CupertinoIcons.arrow_2_circlepath),
+              icon: const Icon(CupertinoIcons.arrow_2_circlepath),
               onPressed: () {
                 // launchUrl(Uri.parse("https://simpleui.72wo.com"));
                 _getData();
@@ -67,13 +66,13 @@ class _DetailPageState extends State<DetailPage> {
       children: [
         ContentArea(builder: (context, constraints) {
           return isLoading
-              ? Visibility(child: spinkit, visible: true)
+              ? Visibility(visible: true, child: spinkit)
               : Column(
                   children: [
                     Expanded(
                         child: SingleChildScrollView(
                       child: Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -95,7 +94,7 @@ class _DetailPageState extends State<DetailPage> {
                               reply: data["reply"].toString(),
                               nodeName: data["node"]["title"].toString(),
                             ),
-                            MacosDivider(),
+                            const MacosDivider(),
                             SelectableHtml(
                               style: {
                                 "h1": Style(color: color),
@@ -109,7 +108,6 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                       ),
                     )),
-
                   ],
                 );
         }),

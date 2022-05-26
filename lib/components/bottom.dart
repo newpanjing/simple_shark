@@ -49,7 +49,7 @@ class MacosuiSheet extends StatelessWidget {
             SizedBox(
               width: 200,
               child: Column(
-                children: [
+                children: const [
                   MacosTextField(
                     placeholder: "输入手机号",
                   ),

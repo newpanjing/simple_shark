@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:simple_shark/utils/api.dart';
-import 'package:macos_ui/macos_ui.dart';
 
 class BannerWidget extends StatefulWidget {
   @override
@@ -31,11 +30,10 @@ class BannerState extends State<BannerWidget> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 200,
-      child: _banners.length > 0
+      child: _banners.isNotEmpty
           ? Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Swiper(
-
                 autoplay: true,
                 autoplayDelay: 3000,
                 itemBuilder: (BuildContext context, int index) {
@@ -54,11 +52,11 @@ class BannerState extends State<BannerWidget> {
                   );
                 },
                 itemCount: _banners.length,
-                pagination: new SwiperPagination(),
-                control: new SwiperControl(),
+                pagination: const SwiperPagination(),
+                control: const SwiperControl(),
               ),
             )
-          : SizedBox(
+          : const SizedBox(
               height: 10,
             ),
     );

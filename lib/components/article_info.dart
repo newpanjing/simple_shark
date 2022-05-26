@@ -17,7 +17,8 @@ class ArticleInfo extends StatefulWidget {
       {Key? key,
       required this.date,
       required this.view,
-      required this.reply, required this.nodeName})
+      required this.reply,
+      required this.nodeName})
       : super(key: key);
 
   @override
@@ -27,8 +28,6 @@ class ArticleInfo extends StatefulWidget {
 }
 
 class _ArticleInfoState extends State<ArticleInfo> {
-
-
   @override
   Widget build(BuildContext context) {
     var isDark = MacosTheme.of(context).brightness.isDark;
@@ -39,7 +38,9 @@ class _ArticleInfoState extends State<ArticleInfo> {
         Row(
           children: [
             Tag(widget.nodeName),
-            SizedBox(width: 10,),
+            const SizedBox(
+              width: 10,
+            ),
             ClipOval(
               child: SizedBox(
                 height: 30,

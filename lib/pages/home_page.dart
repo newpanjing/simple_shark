@@ -11,7 +11,6 @@ import '../components/scroll_view.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
-
   @override
   State<StatefulWidget> createState() {
     return _HomePageState();
@@ -21,32 +20,42 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    var articleList=ArticleList(-1,isLazyLoading: false,);
+    var articleList = ArticleList(
+      -1,
+      isLazyLoading: false,
+    );
     return MacosApp(
       home: MacosScaffold(
         toolBar: ToolBar(
-          title: Text("Simple社区"),
+          title: const Text("Simple社区"),
           actions: [
-
             ToolBarIconButton(
-                icon: Icon(CupertinoIcons.home),
+                icon: const Icon(CupertinoIcons.home),
                 onPressed: () {
                   launchUrl(Uri.parse("https://simpleui.72wo.com"));
                 },
                 label: '主页',
                 showLabel: false),
-            ToolBarIconButton(label: "刷新", icon: Icon(CupertinoIcons.arrow_2_circlepath), showLabel: false,onPressed: (){
-              articleList.refreshPage();
-            }),
-            ToolBarIconButton(label: "发布", icon: Icon(Icons.edit), showLabel: false,onPressed: (){
-              // Navigator.of(context).push(CupertinoPageRoute(builder: (context)=>const EditorPage()));
-            }),
+            ToolBarIconButton(
+                label: "刷新",
+                icon: const Icon(CupertinoIcons.arrow_2_circlepath),
+                showLabel: false,
+                onPressed: () {
+                  articleList.refreshPage();
+                }),
+            ToolBarIconButton(
+                label: "发布",
+                icon: const Icon(Icons.edit),
+                showLabel: false,
+                onPressed: () {
+                  // Navigator.of(context).push(CupertinoPageRoute(builder: (context)=>const EditorPage()));
+                }),
           ],
         ),
         children: [
           ContentArea(builder: (context, constraints) {
             return LoadingMoreScrollView(
-              onLoadingMore: ()  {
+              onLoadingMore: () {
                 articleList.nextPage();
               },
               child: Column(

@@ -55,9 +55,10 @@ class Api {
     return post("/topic/id", {"id": id});
   }
 
-  static getComments(targetId) async{
-     var res=await post("/comment/list", {"targetId": targetId, "targetType": 0});
-     return res["comments"] as List;
+  static getComments(targetId) async {
+    var res =
+        await post("/comment/list", {"targetId": targetId, "targetType": 0});
+    return res["comments"] as List;
   }
 }
 

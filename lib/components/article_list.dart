@@ -7,8 +7,9 @@ import 'package:macos_ui/macos_ui.dart';
 
 class ArticleList extends StatefulWidget {
   final int nodeId;
-  bool isLazyLoading=false;
-  ArticleList(this.nodeId, {Key? key, required this.isLazyLoading}) : super(key: key);
+  bool isLazyLoading = false;
+  ArticleList(this.nodeId, {Key? key, required this.isLazyLoading})
+      : super(key: key);
 
   final state = _ArticleListState();
 
@@ -18,7 +19,6 @@ class ArticleList extends StatefulWidget {
   }
 
   nextPage() {
-
     state.next();
   }
 
@@ -40,7 +40,7 @@ class _ArticleListState extends State<ArticleList> {
   @override
   void initState() {
     super.initState();
-    if(!widget.isLazyLoading){
+    if (!widget.isLazyLoading) {
       _getData();
     }
   }
@@ -54,11 +54,9 @@ class _ArticleListState extends State<ArticleList> {
   }
 
   next() {
-    print("current $currentPage");
     if (currentPage >= pageCount) {
       isBottom = true;
-      setState(() {
-      });
+      setState(() {});
       return;
     }
     currentPage++;
@@ -71,7 +69,6 @@ class _ArticleListState extends State<ArticleList> {
 
   _getData() async {
     Api.getTopics(currentPage, widget.nodeId).then((value) {
-      print(value);
       dataList.addAll(Map<String, dynamic>.from(value)['data']);
       paginator = Map<String, dynamic>.from(value)['paginator'];
       pageCount = int.parse(paginator["pages"].toString());
@@ -94,8 +91,8 @@ class _ArticleListState extends State<ArticleList> {
           data: dataList[index],
         );
       }).toList(),
-      Visibility(child: spinkit, visible: isLoading),
-      Visibility(visible: isBottom, child: Text("~~我也是有底线的~~")),
+      Visibility(visible: isLoading, child: spinkit),
+      Visibility(visible: isBottom, child: const Text("~~我也是有底线的~~")),
     ]);
   }
 }

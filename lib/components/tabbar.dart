@@ -9,9 +9,9 @@ class TabbarWidget extends StatefulWidget {
 
 class _TabbarWidgetState extends State<TabbarWidget> {
   final List<Tab> myTabs = <Tab>[
-    Tab(text: 'Tab1'),
-    Tab(text: 'Tab2'),
-    Tab(text: 'Tab3'),
+    const Tab(text: 'Tab1'),
+    const Tab(text: 'Tab2'),
+    const Tab(text: 'Tab3'),
   ];
 
   @override
@@ -35,7 +35,7 @@ class _TabbarWidgetState extends State<TabbarWidget> {
         body: TabBarView(
           children: <Widget>[
             ListView(
-              children: [
+              children: const [
                 ListTile(
                   title: Text("第一个tab"),
                 ),
@@ -45,7 +45,7 @@ class _TabbarWidgetState extends State<TabbarWidget> {
               ],
             ),
             ListView(
-              children: [
+              children: const [
                 ListTile(
                   title: Text("第二个tab"),
                 ),
@@ -55,7 +55,7 @@ class _TabbarWidgetState extends State<TabbarWidget> {
               ],
             ),
             ListView(
-              children: [
+              children: const [
                 ListTile(
                   title: Text("第三个tab"),
                 ),
@@ -65,7 +65,7 @@ class _TabbarWidgetState extends State<TabbarWidget> {
               ],
             ),
             ListView(
-              children: [
+              children: const [
                 ListTile(
                   title: Text("第四个tab"),
                 ),
@@ -75,7 +75,7 @@ class _TabbarWidgetState extends State<TabbarWidget> {
               ],
             ),
             ListView(
-              children: [
+              children: const [
                 ListTile(
                   title: Text("第五个tab"),
                 ),
@@ -85,7 +85,7 @@ class _TabbarWidgetState extends State<TabbarWidget> {
               ],
             ),
             ListView(
-              children: [
+              children: const [
                 ListTile(
                   title: Text("第6个tab"),
                 ),
@@ -93,8 +93,9 @@ class _TabbarWidgetState extends State<TabbarWidget> {
                   title: Text("第二个tab"),
                 ),
               ],
-            ), ListView(
-              children: [
+            ),
+            ListView(
+              children: const [
                 ListTile(
                   title: Text("第7个tab"),
                 ),
@@ -104,7 +105,7 @@ class _TabbarWidgetState extends State<TabbarWidget> {
               ],
             ),
             ListView(
-              children: [
+              children: const [
                 ListTile(
                   title: Text("第8个tab"),
                 ),

@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 import '../components/article_list.dart';
@@ -18,13 +17,11 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
-
-
-
   late ArticleList articleList;
-  lazyLoading(){
+  lazyLoading() {
     articleList.state.lazyLoadData();
   }
+
   @override
   void initState() {
     articleList = ArticleList(
@@ -32,18 +29,18 @@ class _CategoryPageState extends State<CategoryPage> {
       isLazyLoading: true,
     );
   }
+
   @override
   Widget build(BuildContext context) {
-
     return MacosApp(
       home: MacosScaffold(
         toolBar: ToolBar(
-          title: Row(children: [
-            Text(widget.title),
-
-          ],),
+          title: Row(
+            children: [
+              Text(widget.title),
+            ],
+          ),
           titleWidth: 150.0,
-
           actions: [
             ToolBarIconButton(
               label: 'Toggle Sidebar',
@@ -68,5 +65,4 @@ class _CategoryPageState extends State<CategoryPage> {
       ),
     );
   }
-
 }
