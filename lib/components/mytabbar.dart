@@ -29,24 +29,12 @@ class _MyTabbarState extends State<MyTabbar> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: List.generate(tabs.length, (index) {
-              var item = tabs[index];
-              return CupertinoButton(
-                child: Text("${item["title"]}"),
-                onPressed: () {},
-              );
-            }).toList(),
-          ),
+    return Row(children: [
+      for (var item in tabs)
+        CupertinoButton(
+          child: Text("${item["title"]}"),
+          onPressed: () {},
         ),
-        Divider(
-          color: MacosTheme.of(context).dividerColor,
-        )
-      ],
-    );
+    ]);
   }
 }

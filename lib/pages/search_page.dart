@@ -1,9 +1,11 @@
 import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:simple_shark/components/article_item.dart';
+import 'package:simple_shark/pages/detail_page.dart';
 import 'package:simple_shark/utils/api.dart';
 
 import '../components/article_list.dart';
@@ -35,9 +37,11 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   _search() async {
-    currentPage = 1;
-    items = [];
-    loadMore = false;
+    setState(() {
+      currentPage = 1;
+      items = [];
+      loadMore = false;
+    });
     _loadData();
   }
 
@@ -119,8 +123,25 @@ class _SearchPageState extends State<SearchPage> {
                     children: List.generate(items.length, (index) {
                       var data = items[index];
                       // print(data)
-                      return Html(
-                        data: data["text"],
+                      return Material(
+                        child: InkWell(
+                          child: Column(
+                            children: [
+                              Html(
+                                data: data["text"],
+                              ),
+                            ],
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    DetailPage(id: data["id"]),
+                              ),
+                            );
+                          },
+                        ),
                       );
                     }),
                   ),

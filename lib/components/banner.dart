@@ -3,6 +3,10 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:simple_shark/utils/api.dart';
 
 class BannerWidget extends StatefulWidget {
+  int currentIndex = 0;
+
+  // const BannerWidget(this.currentIndex, {Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return BannerState();

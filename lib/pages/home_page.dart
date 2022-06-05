@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> {
       isLazyLoading: false,
     );
     return MacosApp(
+      debugShowCheckedModeBanner: false,
       home: MacosScaffold(
         toolBar: ToolBar(
           title: const Text("Simple社区"),
@@ -46,22 +47,6 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   articleList.refreshPage();
                 }),
-            ToolBarIconButton(
-                label: "发布",
-                icon: const Icon(Icons.edit),
-                showLabel: false,
-                onPressed: () {
-                  Navigator.of(context).push(CupertinoPageRoute(
-                      builder: (context) => const EditorPage()));
-                }),
-            ToolBarIconButton(
-                label: "发布",
-                icon: const Icon(Icons.public_sharp),
-                showLabel: false,
-                onPressed: () {
-                  Navigator.of(context).push(CupertinoPageRoute(
-                      builder: (context) => const MarkdownPage()));
-                }),
           ],
         ),
         children: [
@@ -79,14 +64,17 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       const TitleText("帖子列表"),
                       SizedBox(
-                        width:150,
+                        // width: 150,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CupertinoButton(
-                                child: Text("最新"), onPressed: () {}),
-                            CupertinoButton(
-                                child: Text("热门"), onPressed: () {}),
+                                child: const Text("发布"),
+                                onPressed: () {
+                                  Navigator.of(context).push(CupertinoPageRoute(
+                                      builder: (context) =>
+                                          const EditorPage()));
+                                }),
                           ],
                         ),
                       )
