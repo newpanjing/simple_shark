@@ -60,9 +60,16 @@ class Api {
         await post("/comment/list", {"targetId": targetId, "targetType": 0});
     return res["comments"] as List;
   }
+
+  static search(keyword, int page) async {
+    if (page <= 0) {
+      page = 0;
+    }
+    return post("/search", {"q": keyword, "page": page});
+  }
 }
 
 void main() async {
-  var r = await Api.getComments(1329);
+  var r = await Api.search("simpleui",1);
   print(r);
 }

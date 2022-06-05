@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:simple_shark/components/article_list.dart';
 import 'package:simple_shark/components/banner.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:simple_shark/components/title_text.dart';
+import 'package:simple_shark/pages/markdown_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../components/mytabbar.dart';
@@ -31,7 +33,7 @@ class _HomePageState extends State<HomePage> {
           title: const Text("Simple社区"),
           actions: [
             ToolBarIconButton(
-                icon: const Icon(CupertinoIcons.home),
+                icon: const Icon(Icons.public_sharp),
                 onPressed: () {
                   launchUrl(Uri.parse("https://simpleui.72wo.com"));
                 },
@@ -49,7 +51,16 @@ class _HomePageState extends State<HomePage> {
                 icon: const Icon(Icons.edit),
                 showLabel: false,
                 onPressed: () {
-                  Navigator.of(context).push(CupertinoPageRoute(builder: (context)=>const EditorPage()));
+                  Navigator.of(context).push(CupertinoPageRoute(
+                      builder: (context) => const EditorPage()));
+                }),
+            ToolBarIconButton(
+                label: "发布",
+                icon: const Icon(Icons.public_sharp),
+                showLabel: false,
+                onPressed: () {
+                  Navigator.of(context).push(CupertinoPageRoute(
+                      builder: (context) => const MarkdownPage()));
                 }),
           ],
         ),
@@ -63,6 +74,24 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   BannerWidget(),
                   MyTabbar(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const TitleText("帖子列表"),
+                      SizedBox(
+                        width:150,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CupertinoButton(
+                                child: Text("最新"), onPressed: () {}),
+                            CupertinoButton(
+                                child: Text("热门"), onPressed: () {}),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                   articleList,
                   // Expanded(child:ArticleList()),
                 ],

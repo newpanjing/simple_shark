@@ -28,6 +28,7 @@ class ArticleInfo extends StatefulWidget {
 }
 
 class _ArticleInfoState extends State<ArticleInfo> {
+
   @override
   Widget build(BuildContext context) {
     var isDark = MacosTheme.of(context).brightness.isDark;

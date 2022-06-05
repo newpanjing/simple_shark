@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:simple_shark/components/bottom.dart';
 import 'package:simple_shark/pages/category_page.dart';
 import 'package:simple_shark/pages/home_page.dart';
+import 'package:simple_shark/pages/search_page.dart';
 import 'package:simple_shark/utils/api.dart';
 import 'package:macos_ui/macos_ui.dart';
 
@@ -17,6 +20,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MacosApp(
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('zh', 'CN'),
+        Locale('en', 'US'),
+      ],
       title: 'Simple社区',
       themeMode: ThemeMode.system,
       home: MyHomePage(),
@@ -73,10 +86,15 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return MacosWindow(
       sidebar: Sidebar(
-        top: const MacosSearchField(
-          placeholder: "Search",
-          maxLines: 1,
-        ),
+        top: CupertinoSearchTextField(
+            placeholder: '搜索',
+            onSubmitted: (value) {
+              Navigator.of(context).push(CupertinoPageRoute(
+                builder: (context) {
+                  return SearchPage(keyword: value);
+                },
+              ));
+            }),
         bottom: const Bottom(),
         minWidth: 200,
         builder: (context, scrollController) {

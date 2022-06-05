@@ -47,7 +47,8 @@ class _ArticleItemState extends State<ArticleItem> {
                     Padding(
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        widget.data["subject"],
+                        (widget.data["subject"] as String)
+                            .replaceAll("\n|\r|\t|\s", ""),
                         style: TextStyle(
                           fontSize: body?.fontSize,
                           fontWeight: body?.fontWeight,
