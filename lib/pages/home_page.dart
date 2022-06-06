@@ -14,6 +14,7 @@ import '../model/user.dart';
 import 'editor_page.dart';
 
 class HomePage extends StatefulWidget {
+
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -59,14 +60,7 @@ class _HomePageState extends State<HomePage> {
               },
               child: Column(
                 children: [
-                  CupertinoButton(
-                      child: Text("测试信息"),
-                      onPressed: () {
-                        Provider.of<UserModel>(context, listen: false)
-                            .setUserInfo({"username": "测试一下"});
-                      }),
                   BannerWidget(),
-                  MyTabbar(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

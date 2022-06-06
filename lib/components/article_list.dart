@@ -8,6 +8,7 @@ import 'package:macos_ui/macos_ui.dart';
 class ArticleList extends StatefulWidget {
   final int nodeId;
   bool isLazyLoading = false;
+
   ArticleList(this.nodeId, {Key? key, required this.isLazyLoading})
       : super(key: key);
 
@@ -46,11 +47,13 @@ class _ArticleListState extends State<ArticleList> {
   }
 
   refresh() {
-    currentPage = 1;
-    pageCount = 2;
-    isLoading = false;
-    dataList = [];
-    _getData();
+    setState(() {
+      currentPage = 1;
+      pageCount = 2;
+      isLoading = false;
+      dataList = [];
+      _getData();
+    });
   }
 
   next() {

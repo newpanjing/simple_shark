@@ -3,14 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:simple_shark/utils/api.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-class MyTabbar extends StatefulWidget {
+typedef ChangeCallback = void Function(int index);
+
+class MyTabBar extends StatefulWidget {
+  final ChangeCallback onChange;
+
+  const MyTabBar({Key? key, required this.onChange}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
-    return _MyTabbarState();
+    return _MyTabBarState();
   }
 }
 
-class _MyTabbarState extends State<MyTabbar> {
+class _MyTabBarState extends State<MyTabBar> {
   var tabs = [];
 
   @override
@@ -30,10 +36,10 @@ class _MyTabbarState extends State<MyTabbar> {
   @override
   Widget build(BuildContext context) {
     return Row(children: [
-      for (var item in tabs)
+      for (var i=0;i<tabs.length;i++)
         CupertinoButton(
-          child: Text("${item["title"]}"),
-          onPressed: () {},
+          child: Text("${tabs[i]["title"]}"),
+          onPressed: () => widget.onChange(i),
         ),
     ]);
   }
