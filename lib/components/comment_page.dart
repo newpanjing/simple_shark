@@ -24,6 +24,7 @@ class _CommentState extends State<CommentPage> {
   var showEditor = false;
   var comment = "";
   var isPushing = false;
+  var token = "";
 
   pushComment() {
     //判断评论是否为空
@@ -51,12 +52,14 @@ class _CommentState extends State<CommentPage> {
     });
 
     //发送评论
-    var token =
-        Provider.of<UserModel>(context, listen: false).userInfo["token"];
+
     Api(token: token).postComment(widget.id, comment).then((res) {
+      setState(() {
+        isPushing = false;
+      });
+
       if (res["code"] == 1) {
         setState(() {
-          isPushing = false;
           comment = "";
           // showEditor = false;
         });
@@ -86,6 +89,7 @@ class _CommentState extends State<CommentPage> {
   Widget build(BuildContext context) {
     var currentUser = Provider.of<UserModel>(context).userInfo;
 
+    token = currentUser["token"];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -178,7 +182,7 @@ class _CommentState extends State<CommentPage> {
                           ))
                   ],
                 ),
-                const MacosDivider(),
+                // const MacosDivider(),
               ],
             ),
           ),
@@ -193,15 +197,27 @@ class _CommentState extends State<CommentPage> {
                     return Column(
                       children: [
                         const MacosDivider(),
-                        CommentItem(data: comments[index])
+                        CommentItem(
+                          data: comments[index],
+                          onRefresh: onRefresh,
+                          targetId: widget.id,
+                        )
                       ],
                     );
                   }
-                  return CommentItem(data: comments[index]);
+                  return CommentItem(
+                    data: comments[index],
+                    onRefresh: onRefresh,
+                    targetId: widget.id,
+                  );
                 }).toList(),
               )
       ],
     );
+  }
+
+  onRefresh() {
+    _getData();
   }
 
   @override

@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 
-const baseName = "https://simpleui.72wo.com/api";
+// const baseName = "https://simpleui.72wo.com/api";
+const baseName = "http://192.168.31.9:8003/api";
 
 class Api {
   //用户的token
@@ -97,6 +98,13 @@ class Api {
       "parentId": parentId,
       "replyUserId": replyUserId
     });
+  }
+
+  deleteComment(id) async {
+    return post("/comment/delete", {"id": id});
+  }
+  upComment(id) async {
+    return post("/comment/up", {"id": id});
   }
 }
 

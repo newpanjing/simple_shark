@@ -7,6 +7,7 @@ import 'package:simple_shark/components/article_info.dart';
 import 'package:simple_shark/components/divider.dart';
 import 'package:simple_shark/utils/api.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../components/comment_page.dart';
 import '../model/user.dart';
@@ -63,6 +64,14 @@ class _DetailPageState extends State<DetailPage> {
               },
               label: '刷新',
               showLabel: false),
+          ToolBarIconButton(
+              icon: const Icon(CupertinoIcons.link_circle),
+              onPressed: () {
+                launchUrl(
+                    Uri.parse("https://simpleui.72wo.com/topic/${widget.id}"));
+              },
+              label: '网站中打开',
+              showLabel: false),
         ],
       ),
       children: [
@@ -97,11 +106,18 @@ class _DetailPageState extends State<DetailPage> {
                               nodeName: data["node"]["title"].toString(),
                             ),
                             const MacosDivider(),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             SelectableHtml(
                               style: {
                                 "h1": Style(color: color),
                               },
                               data: data["contentRendered"],
+                            ),
+
+                            const SizedBox(
+                              height: 10,
                             ),
                             CommentPage(
                               id: int.parse(data["id"].toString()),

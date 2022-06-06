@@ -30,7 +30,7 @@ class _TimeButtonState extends State<TimeButton> {
 
     //开始倒计时，一秒钟一次
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_countdown == 0) {
+      if (_countdown <= 0) {
         _timer.cancel();
         setState(() {
           isCountdown = false;
@@ -40,6 +40,13 @@ class _TimeButtonState extends State<TimeButton> {
       _countdown--;
       setState(() {});
     });
+  }
+
+  @override
+  void dispose() {
+    if(_timer != null) {
+      _timer.cancel();
+    }
   }
 
   @override
