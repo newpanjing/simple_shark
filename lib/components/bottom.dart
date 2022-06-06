@@ -1,6 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:provider/provider.dart';
+import 'package:simple_shark/model/user.dart';
+import 'package:simple_shark/utils/avatar.dart';
+import 'package:simple_shark/utils/loading.dart';
+
+import 'login.dart';
 
 class Bottom extends StatefulWidget {
   const Bottom({Key? key}) : super(key: key);
@@ -15,6 +21,7 @@ class MacosuiSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MacosSheet(
+      insetPadding: EdgeInsets.symmetric(horizontal: 140.0, vertical: 48.0),
       child: Center(
         child: Column(
           children: [
@@ -46,30 +53,7 @@ class MacosuiSheet extends StatelessWidget {
               ],
             ),
             // const Spacer(),
-            SizedBox(
-              width: 200,
-              child: Column(
-                children: const [
-                  MacosTextField(
-                    placeholder: "输入手机号",
-                  ),
-                  // Row(
-                  //   children: [
-                  //     MacosTextField(
-                  //       placeholder: "图像验证码",
-                  //     ),
-                  //     Image.network("https://simpleui.72wo.com/api/verification/code?uid=3e4853d3-338a-4171-a4bf-fd02be6314dd")
-                  //   ],
-                  // )
-                ],
-              ),
-            ),
-            PushButton(
-              buttonSize: ButtonSize.large,
-              child: const Text('下一步'),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            const SizedBox(height: 50),
+            // LoginWidget(),
           ],
         ),
       ),
@@ -83,24 +67,88 @@ class _BottomState extends State<Bottom> {
     super.initState();
   }
 
+  _setUserInfo(userInfo) {
+    Provider.of<UserModel>(context, listen: false).setUserInfo(userInfo);
+  }
+
   @override
-  Widget build(BuildContext context) {
-    /**
-     * const MacosListTile(
-        leading: MacosIcon(CupertinoIcons.profile_circled),
-        title: Text('Tim Apple'),
-        subtitle: Text('tim@apple.com'),
-        )
-     */
-    return PushButton(
-        buttonSize: ButtonSize.large,
-        onPressed: () {
-          print("点击登陆");
-          showMacosSheet(
-            context: context,
-            builder: (_) => const MacosuiSheet(),
+  Widget build(BuildContext context1) {
+    return Consumer<UserModel>(
+      builder: (context, counter, child) {
+        if (counter.userInfo.isEmpty) {
+          return PushButton(
+              buttonSize: ButtonSize.large,
+              onPressed: () {
+                showLoginDialog(context, (userInfo) {
+                  _setUserInfo(userInfo);
+                });
+              },
+              child: const Text("点击登陆"));
+        } else {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(children: [
+                ClipOval(
+                  child: Image.network(
+                    getAvatar(counter.userInfo["avatar"]),
+                    width: 40,
+                    height: 40,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Column(
+                  children: [
+                    Text(
+                      counter.userInfo["name"],
+                      style: MacosTheme.of(context).typography.title2,
+                    ),
+                    // if(counter.userInfo["verify"] as bool)
+                    //   Text(
+                    //     counter.userInfo["verifyDesc"] as String,
+                    //     style:TextStyle(
+                    //       color:  MacosTheme.of(context).dividerColor
+                    //     ),
+                    //   ),
+                  ],
+                )
+              ]),
+              MacosIconButton(
+                  icon: const Icon(CupertinoIcons.clear_circled),
+                  onPressed: () {
+                    showMacosAlertDialog(
+                      context: context,
+                      builder: (context) => MacosAlertDialog(
+                        appIcon: const FlutterLogo(
+                          size: 56,
+                        ),
+                        title: const Text(
+                          '您确定要退出登陆吗？',
+                        ),
+                        //horizontalActions: false,
+                        primaryButton: PushButton(
+                          buttonSize: ButtonSize.large,
+                          onPressed: () {
+                            counter.setUserInfo({});
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('确定'),
+                        ),
+                        secondaryButton: PushButton(
+                          buttonSize: ButtonSize.large,
+                          isSecondary: true,
+                          onPressed: Navigator.of(context).pop,
+                          child: const Text('取消'),
+                        ),
+                        message: const Text(""),
+                      ),
+                    );
+                  }),
+            ],
           );
-        },
-        child: const Text("点击登陆"));
+        }
+      },
+    );
   }
 }

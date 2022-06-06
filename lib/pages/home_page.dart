@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_shark/components/article_list.dart';
 import 'package:simple_shark/components/banner.dart';
 import 'package:macos_ui/macos_ui.dart';
@@ -9,6 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../components/mytabbar.dart';
 import '../components/scroll_view.dart';
+import '../model/user.dart';
 import 'editor_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -57,6 +59,12 @@ class _HomePageState extends State<HomePage> {
               },
               child: Column(
                 children: [
+                  CupertinoButton(
+                      child: Text("测试信息"),
+                      onPressed: () {
+                        Provider.of<UserModel>(context, listen: false)
+                            .setUserInfo({"username": "测试一下"});
+                      }),
                   BannerWidget(),
                   MyTabbar(),
                   Row(

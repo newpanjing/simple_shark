@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:macos_ui/macos_ui.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_shark/components/bottom.dart';
+import 'package:simple_shark/model/user.dart';
 import 'package:simple_shark/pages/category_page.dart';
 import 'package:simple_shark/pages/home_page.dart';
 import 'package:simple_shark/pages/search_page.dart';
 import 'package:simple_shark/utils/api.dart';
-import 'package:macos_ui/macos_ui.dart';
 
 void main() {
   runApp(const MyApp());
@@ -84,39 +85,42 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MacosWindow(
-      sidebar: Sidebar(
-        top: CupertinoSearchTextField(
-            placeholder: '搜索',
-            onSubmitted: (value) {
-              Navigator.of(context).push(CupertinoPageRoute(
-                builder: (context) {
-                  return SearchPage(keyword: value);
+
+    return ChangeNotifierProvider<UserModel>(
+        create: (_) => UserModel(),
+        child: MacosWindow(
+          sidebar: Sidebar(
+            top: CupertinoSearchTextField(
+                placeholder: '搜索',
+                onSubmitted: (value) {
+                  Navigator.of(context).push(CupertinoPageRoute(
+                    builder: (context) {
+                      return SearchPage(keyword: value);
+                    },
+                  ));
+                }),
+            bottom: const Bottom(),
+            minWidth: 200,
+            builder: (context, scrollController) {
+              return SidebarItems(
+                currentIndex: _pageIndex,
+                onChanged: (index) {
+                  setState(() {
+                    _pageIndex = index;
+                    var item = pages[index];
+                    if (item is CategoryPage) {
+                      item.state.lazyLoading();
+                    }
+                  });
                 },
-              ));
-            }),
-        bottom: const Bottom(),
-        minWidth: 200,
-        builder: (context, scrollController) {
-          return SidebarItems(
-            currentIndex: _pageIndex,
-            onChanged: (index) {
-              setState(() {
-                _pageIndex = index;
-                var item = pages[index];
-                if (item is CategoryPage) {
-                  item.state.lazyLoading();
-                }
-              });
+                items: sidebars,
+              );
             },
-            items: sidebars,
-          );
-        },
-      ),
-      child: IndexedStack(
-        index: _pageIndex,
-        children: pages,
-      ),
-    );
+          ),
+          child: IndexedStack(
+            index: _pageIndex,
+            children: pages,
+          ),
+        ));
   }
 }

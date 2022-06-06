@@ -2,12 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_shark/components/article_info.dart';
 import 'package:simple_shark/components/divider.dart';
 import 'package:simple_shark/utils/api.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 import '../components/comment_page.dart';
+import '../model/user.dart';
 
 class DetailPage extends StatefulWidget {
   final int id;
@@ -76,6 +78,12 @@ class _DetailPageState extends State<DetailPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            CupertinoButton(
+                                child: Text("测试信息"),
+                                onPressed: () {
+                                  Provider.of<UserModel>(context, listen: false)
+                                      .setUserInfo({"username": "测试一下"});
+                                }),
                             SelectableText(
                               data["title"],
                               cursorColor: Colors.blue,

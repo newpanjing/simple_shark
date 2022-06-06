@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:uuid/uuid.dart';
 
 const baseName = "https://simpleui.72wo.com/api";
 
@@ -67,9 +68,21 @@ class Api {
     }
     return post("/search", {"q": keyword, "page": page});
   }
+
+  static getVerfyCodeUrl(uid) {
+    return "$baseName/verification/code?uid=$uid";
+  }
+
+  static sendSmsCode(code, uid, phone) async {
+    return post("/sms/code", {"code": code, "uid": uid, "phone": phone});
+  }
+
+  static smsLogin(phone, smsCode) async {
+    return post("/sms/login", {"phone": phone, "smsCode": smsCode});
+  }
 }
 
 void main() async {
-  var r = await Api.search("simpleui",1);
-  print(r);
+  // var r = await Api.search("simpleui", 1);
+  // print(r);
 }
