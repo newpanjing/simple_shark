@@ -85,7 +85,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return ChangeNotifierProvider<UserModel>(
         create: (_) => UserModel(),
         child: MacosWindow(
@@ -93,8 +92,22 @@ class _MyHomePageState extends State<MyHomePage> {
             top: CupertinoSearchTextField(
                 placeholder: '搜索',
                 onSubmitted: (value) {
-                  var page= pages[0] as HomePage;
-                      page.search(value);
+                  setState(() {
+                    _pageIndex = 0;
+                  });
+                  var page = pages[_pageIndex];
+                  BuildContext bodyContext = context;
+                  if (page is HomePage) {
+                    bodyContext = page.getContext();
+                  } else if (page is CategoryPage) {
+                    bodyContext = page.getContext();
+                  }
+                  //跳转到搜索页面
+                  Navigator.of(bodyContext).push(CupertinoPageRoute(
+                    builder: (context) {
+                      return SearchPage(keyword: value);
+                    },
+                  ));
                 }),
             bottom: const Bottom(),
             minWidth: 200,

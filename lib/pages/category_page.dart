@@ -4,6 +4,8 @@ import 'package:macos_ui/macos_ui.dart';
 import '../components/article_list.dart';
 import '../components/scroll_view.dart';
 
+late BuildContext bodyContext;
+
 class CategoryPage extends StatefulWidget {
   final int id;
   final String title;
@@ -12,12 +14,17 @@ class CategoryPage extends StatefulWidget {
   CategoryPage({Key? key, required this.id, required this.title})
       : super(key: key);
 
+  getContext() {
+    return bodyContext;
+  }
+
   @override
   State<CategoryPage> createState() => state;
 }
 
 class _CategoryPageState extends State<CategoryPage> {
   late ArticleList articleList;
+
   lazyLoading() {
     articleList.state.lazyLoadData();
   }
@@ -54,6 +61,7 @@ class _CategoryPageState extends State<CategoryPage> {
         ),
         children: [
           ContentArea(builder: (context, scrollController) {
+            bodyContext = context;
             return LoadingMoreScrollView(
               onLoadingMore: () {
                 articleList.nextPage();

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:macos_ui/macos_ui.dart';
@@ -21,7 +22,6 @@ class _EditorPageState extends State<EditorPage> {
   Widget build(BuildContext context) {
     TextEditingController controller = TextEditingController();
     return Material(
-
       child: MacosScaffold(
         toolBar: ToolBar(
           title: Row(
@@ -40,13 +40,19 @@ class _EditorPageState extends State<EditorPage> {
               builder: (context, _) => Center(
                     child: Padding(
                       padding: const EdgeInsets.all(10),
-                      child: MarkdownInput(
-                        (String value) => setState(() => text = value),
-                        text,
-                        label: 'Description',
-                        maxLines: 100,
-                        actions: MarkdownType.values,
-                        controller: controller,
+                      child: Column(
+                        children: [
+
+                          Expanded(
+                              child: MarkdownInput(
+                            (String value) => setState(() => text = value),
+                            text,
+                            label: 'Description',
+                            maxLines: 100,
+                            actions: MarkdownType.values,
+                            controller: controller,
+                          ))
+                        ],
                       ),
                     ),
                   )),
