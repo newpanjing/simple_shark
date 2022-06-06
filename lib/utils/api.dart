@@ -6,15 +6,21 @@ import 'package:uuid/uuid.dart';
 const baseName = "https://simpleui.72wo.com/api";
 
 class Api {
+  //用户的token
+  String token;
+
+  Api({required this.token});
+
   static get(url) async {
     var response = await http.get(Uri.parse(baseName + url));
     return _decode(response);
   }
 
-  static post(url, body) async {
+  post(url, body) async {
     var response = await http
         .post(Uri.parse(baseName + url), body: jsonEncode(body), headers: {
       "Content-Type": "application/json",
+      "token": token,
     });
     return _decode(response);
   }
@@ -49,16 +55,16 @@ class Api {
     if (nodeId != -1) {
       params["pk"] = nodeId;
     }
-    return post("/topic", params);
+    return Api(token: "").post("/topic", params);
   }
 
   static getTopic(int id) async {
-    return post("/topic/id", {"id": id});
+    return Api(token: "").post("/topic/id", {"id": id});
   }
 
   static getComments(targetId) async {
-    var res =
-        await post("/comment/list", {"targetId": targetId, "targetType": 0});
+    var res = await Api(token: "")
+        .post("/comment/list", {"targetId": targetId, "targetType": 0});
     return res["comments"] as List;
   }
 
@@ -66,7 +72,7 @@ class Api {
     if (page <= 0) {
       page = 0;
     }
-    return post("/search", {"q": keyword, "page": page});
+    return Api(token: "").post("/search", {"q": keyword, "page": page});
   }
 
   static getVerfyCodeUrl(uid) {
@@ -74,11 +80,23 @@ class Api {
   }
 
   static sendSmsCode(code, uid, phone) async {
-    return post("/sms/code", {"code": code, "uid": uid, "phone": phone});
+    return Api(token: "")
+        .post("/sms/code", {"code": code, "uid": uid, "phone": phone});
   }
 
   static smsLogin(phone, smsCode) async {
-    return post("/sms/login", {"phone": phone, "smsCode": smsCode});
+    return Api(token: "")
+        .post("/sms/login", {"phone": phone, "smsCode": smsCode});
+  }
+
+  postComment(targetId, content, {parentId, replyUserId}) async {
+    return post("/comment/post", {
+      "targetId": targetId,
+      "targetType": 0,
+      "content": content,
+      "parentId": parentId,
+      "replyUserId": replyUserId
+    });
   }
 }
 

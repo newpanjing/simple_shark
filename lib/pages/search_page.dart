@@ -72,10 +72,13 @@ class _SearchPageState extends State<SearchPage> {
         toolBar: ToolBar(
           title: Row(
             children: [
+              MacosBackButton(onPressed: (){
+                Navigator.pop(context);
+              },),
+              SizedBox(width: 10,),
               Text(widget.keyword),
             ],
           ),
-          titleWidth: 150.0,
           actions: [
             ToolBarIconButton(
               label: 'Toggle Sidebar',

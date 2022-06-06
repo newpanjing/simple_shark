@@ -25,7 +25,7 @@ class _EditorPageState extends State<EditorPage> {
       child: MacosScaffold(
         toolBar: ToolBar(
           title: Row(
-            children: const [Text("编辑器"), Text("编辑器"), Text("编辑器")],
+            children: const [Text("编辑器")],
           ),
           actions: [
             ToolBarIconButton(

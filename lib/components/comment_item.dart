@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:simple_shark/components/user_info.dart';
 
 import '../utils/avatar.dart';
 
@@ -27,27 +28,9 @@ class _CommentItemState extends State<CommentItem> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                ClipOval(
-                  child: SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Image.network(
-                      getAvatar(user["avatar"]),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  user['name'],
-                  style: TextStyle(
-                      color: isDark ? HexColor("#dddede") : Colors.black),
-                )
-              ],
+            UserInfo(
+              avatar: user["avatar"],
+              name: user["name"],
             ),
             Row(
               children: [

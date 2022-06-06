@@ -93,11 +93,8 @@ class _MyHomePageState extends State<MyHomePage> {
             top: CupertinoSearchTextField(
                 placeholder: '搜索',
                 onSubmitted: (value) {
-                  Navigator.of(context).push(CupertinoPageRoute(
-                    builder: (context) {
-                      return SearchPage(keyword: value);
-                    },
-                  ));
+                  var page= pages[0] as HomePage;
+                      page.search(value);
                 }),
             bottom: const Bottom(),
             minWidth: 200,

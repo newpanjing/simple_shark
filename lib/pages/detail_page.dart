@@ -78,12 +78,6 @@ class _DetailPageState extends State<DetailPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CupertinoButton(
-                                child: Text("测试信息"),
-                                onPressed: () {
-                                  Provider.of<UserModel>(context, listen: false)
-                                      .setUserInfo({"username": "测试一下"});
-                                }),
                             SelectableText(
                               data["title"],
                               cursorColor: Colors.blue,
