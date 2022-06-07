@@ -31,6 +31,7 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   void initState() {
+    super.initState();
     articleList = ArticleList(
       widget.id,
       isLazyLoading: true,
@@ -49,6 +50,14 @@ class _CategoryPageState extends State<CategoryPage> {
           ),
           titleWidth: 150.0,
           actions: [
+            ToolBarIconButton(
+              label: '刷新',
+              icon: const MacosIcon(
+                CupertinoIcons.arrow_2_circlepath,
+              ),
+              onPressed: () => articleList.refreshPage(),
+              showLabel: false,
+            ),
             ToolBarIconButton(
               label: 'Toggle Sidebar',
               icon: const MacosIcon(

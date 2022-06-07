@@ -92,7 +92,6 @@ class _MarkdownInputState extends State<MarkdownInput> {
               return ConstrainedBox(constraints: BoxConstraints(
                 maxHeight: constraints.maxHeight,
               ),child: TextField(
-
                 textInputAction: TextInputAction.newline,
                 maxLines: widget.maxLines,
                 controller: _controller,

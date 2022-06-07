@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_shark/components/article_info.dart';
 import 'package:simple_shark/components/divider.dart';
+import 'package:simple_shark/model/user.dart';
+import 'package:simple_shark/pages/editor_page.dart';
 import 'package:simple_shark/utils/api.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../components/comment_page.dart';
+import '../utils/dialog.dart';
 
 class DetailPage extends StatefulWidget {
   final int id;
@@ -21,12 +25,16 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   var isLoading = true;
-
+  var isDeleteLoading = false;
   late Map<String, dynamic> data;
+  late Api api;
 
   @override
   void initState() {
     super.initState();
+    var token =
+        Provider.of<UserModel>(context, listen: false).userInfo["token"];
+    api = Api(token: token);
     _getData();
   }
 
@@ -40,16 +48,64 @@ class _DetailPageState extends State<DetailPage> {
     });
   }
 
+  _deleteTopic() {
+    setState(() {
+      isDeleteLoading = true;
+    });
+    api.deleteTopic(widget.id).then((value) {
+      setState(() {
+        isDeleteLoading = false;
+      });
+      Navigator.pop(context);
+
+      if (value["code"] != 1) {
+        showErrorDialog(context, value["msg"]);
+      }
+    });
+  }
+
+  _delete() {
+    //显示对话框
+    showDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: const Text("删除帖子"),
+        content: const Text("确定删除帖子吗？"),
+        actions: <Widget>[
+          CupertinoDialogAction(
+            child: const Text("取消"),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          CupertinoDialogAction(
+            child: const Text("确定"),
+            onPressed: () {
+              _deleteTopic();
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  _edit() {
+    Navigator.of(context).push(CupertinoPageRoute(
+      builder: (context) {
+        return EditorPage(id: widget.id);
+      },
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
-    final spinkit = SpinKitRing(
+    final spinKit = SpinKitRing(
       lineWidth: 2.0,
       color: MacosTheme.of(context).primaryColor,
       size: 30.0,
     );
     //
     var color = Theme.of(context).textTheme.headline1?.color;
-
+    var userInfo = Provider.of<UserModel>(context).userInfo;
     return MacosScaffold(
       toolBar: ToolBar(
         title: const Text("帖子详情"),
@@ -57,7 +113,6 @@ class _DetailPageState extends State<DetailPage> {
           ToolBarIconButton(
               icon: const Icon(CupertinoIcons.arrow_2_circlepath),
               onPressed: () {
-                // launchUrl(Uri.parse("https://simpleui.72wo.com"));
                 _getData();
               },
               label: '刷新',
@@ -75,7 +130,7 @@ class _DetailPageState extends State<DetailPage> {
       children: [
         ContentArea(builder: (context, constraints) {
           return isLoading
-              ? Visibility(visible: true, child: spinkit)
+              ? Visibility(visible: true, child: spinKit)
               : Column(
                   children: [
                     Expanded(
@@ -104,6 +159,41 @@ class _DetailPageState extends State<DetailPage> {
                               nodeName: data["node"]["title"].toString(),
                             ),
                             const MacosDivider(),
+                            if ((userInfo.isNotEmpty &&
+                                    userInfo["isStaff"] as bool) ||
+                                userInfo["id"] == data["user"]["id"])
+                              IntrinsicHeight(
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        CupertinoButton(
+                                            onPressed: _edit,
+                                            child: const Text(
+                                              "编辑",
+                                              style: TextStyle(
+                                                  color: Colors.green),
+                                            )),
+                                        const SizedBox(width: 10),
+                                        if (isDeleteLoading)
+                                          const CupertinoButton(
+                                            onPressed: null,
+                                            child: Text("删除中..."),
+                                          ),
+                                        if (!isDeleteLoading)
+                                          CupertinoButton(
+                                              onPressed: _delete,
+                                              child: const Text(
+                                                "删除",
+                                                style: TextStyle(
+                                                    color: Colors.red),
+                                              )),
+                                      ],
+                                    ),
+                                    const MacosDivider(),
+                                  ],
+                                ),
+                              ),
                             const SizedBox(
                               height: 10,
                             ),
@@ -113,7 +203,6 @@ class _DetailPageState extends State<DetailPage> {
                               },
                               data: data["contentRendered"],
                             ),
-
                             const SizedBox(
                               height: 10,
                             ),

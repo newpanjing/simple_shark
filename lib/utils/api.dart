@@ -103,16 +103,22 @@ class Api {
   deleteComment(id) async {
     return post("/comment/delete", {"id": id});
   }
+
   upComment(id) async {
     return post("/comment/up", {"id": id});
   }
 
-  postTopic(title, content, categoryId) async {
-    return post("/post/topic", {
-      "title": title,
-      "content": content,
-      "nodeId": categoryId
-    });
+  postTopic(title, content, categoryId, {id}) async {
+    return post("/post/topic",
+        {"title": title, "content": content, "nodeId": categoryId, "id": id});
+  }
+
+  deleteTopic(id) async {
+    return post("/topic/delete", {"id": id});
+  }
+
+  getTopicEditData(id) async {
+    return post("/topic/edit/data", {"id": id});
   }
 }
 
