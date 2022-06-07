@@ -69,6 +69,7 @@ class _ArticleItemState extends State<ArticleItem> {
                       reply: widget.data["reply"].toString(),
                       date: widget.data["lastReplied"].toString(),
                       nodeName: widget.data["node"]["title"].toString(),
+                      isDark: isDark,
                     ),
                     // ArticleInfo(Map<String,dynamic>.from(widget.data["user"]), date: "", view: "view", reply: "reply"),
                     const SizedBox(

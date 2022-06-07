@@ -106,6 +106,7 @@ class _DetailPageState extends State<DetailPage> {
     //
     var color = Theme.of(context).textTheme.headline1?.color;
     var userInfo = Provider.of<UserModel>(context).userInfo;
+    var isDark = MacosTheme.of(context).brightness.isDark;
     return MacosScaffold(
       toolBar: ToolBar(
         title: const Text("帖子详情"),
@@ -157,6 +158,7 @@ class _DetailPageState extends State<DetailPage> {
                               view: data["view"].toString(),
                               reply: data["reply"].toString(),
                               nodeName: data["node"]["title"].toString(),
+                              isDark: isDark,
                             ),
                             const MacosDivider(),
                             if ((userInfo.isNotEmpty &&

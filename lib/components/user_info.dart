@@ -7,8 +7,8 @@ import '../utils/avatar.dart';
 class UserInfo extends StatefulWidget {
   final String avatar;
   final String name;
-
-  const UserInfo({Key? key, required this.avatar, required this.name})
+  final bool? isDark;
+  const UserInfo({Key? key, required this.avatar, required this.name, this.isDark=false})
       : super(key: key);
 
   @override
@@ -21,6 +21,9 @@ class _UserInfoState extends State<UserInfo> {
   @override
   Widget build(BuildContext context) {
     var isDark = MacosTheme.of(context).brightness.isDark;
+    if (widget.isDark!) {
+      isDark = widget.isDark!;
+    }
     return Row(
       children: [
         ClipOval(

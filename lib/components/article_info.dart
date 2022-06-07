@@ -13,13 +13,13 @@ class ArticleInfo extends StatefulWidget {
   final String view;
   final String reply;
   final String nodeName;
-
+  final bool isDark;
   const ArticleInfo(this.user,
       {Key? key,
       required this.date,
       required this.view,
       required this.reply,
-      required this.nodeName})
+      required this.nodeName, required this.isDark})
       : super(key: key);
 
   @override
@@ -31,8 +31,7 @@ class ArticleInfo extends StatefulWidget {
 class _ArticleInfoState extends State<ArticleInfo> {
   @override
   Widget build(BuildContext context) {
-    var isDark = MacosTheme.of(context).brightness.isDark;
-
+    var isDark = widget.isDark;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -45,6 +44,7 @@ class _ArticleInfoState extends State<ArticleInfo> {
             UserInfo(
               avatar: widget.user["avatar"],
               name: widget.user["name"],
+              isDark: isDark,
             ),
             const SizedBox(
               width: 10,
@@ -66,7 +66,7 @@ class _ArticleInfoState extends State<ArticleInfo> {
                 Icon(
                   CupertinoIcons.eye,
                   size: 14,
-                  color: isDark ? HexColor("#dddede") : Colors.black,
+                  color: isDark?HexColor("#dddede"):Colors.black,
                 ),
                 const SizedBox(
                   width: 10,
@@ -83,7 +83,7 @@ class _ArticleInfoState extends State<ArticleInfo> {
                 Icon(
                   Icons.message,
                   size: 14,
-                  color: isDark ? HexColor("#dddede") : Colors.black,
+                  color: isDark ? HexColor("#eeeeee") : Colors.black,
                 ),
                 const SizedBox(
                   width: 10,

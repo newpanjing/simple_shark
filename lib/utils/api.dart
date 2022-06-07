@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
@@ -22,6 +23,8 @@ class Api {
         .post(Uri.parse(baseName + url), body: jsonEncode(body), headers: {
       "Content-Type": "application/json",
       "token": token,
+      "version": "1.0",
+      "from": "pc-client",
     });
     return _decode(response);
   }
