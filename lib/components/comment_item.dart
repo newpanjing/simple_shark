@@ -170,7 +170,7 @@ class _CommentItemState extends State<CommentItem> {
                                         Api(token: token)
                                             .deleteComment(id)
                                             .then((value) {
-                                          if (value["code"] == 0) {
+                                          if (value["code"] != 1) {
                                             //显示错误
                                             showCupertinoDialog(
                                                 context: context,

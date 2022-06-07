@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:simple_shark/components/bottom.dart';
 import 'package:simple_shark/model/user.dart';
 import 'package:simple_shark/pages/category_page.dart';
+import 'package:simple_shark/pages/editor_page.dart';
 import 'package:simple_shark/pages/home_page.dart';
 import 'package:simple_shark/pages/search_page.dart';
 import 'package:simple_shark/utils/api.dart';
@@ -83,6 +84,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
   var switchValue = false;
 
+  onPublished() {
+    setState(() {
+      _pageIndex = 0;
+    });
+    var page = pages[_pageIndex];
+    if (page is HomePage) {
+      var context = page.getContext();
+      //跳转到编辑页面
+      Navigator.of(context).push(CupertinoPageRoute(
+        builder: (context) {
+          return EditorPage();
+        },
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserModel>(
@@ -109,7 +126,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                   ));
                 }),
-            bottom: const Bottom(),
+            bottom: Bottom(
+              onPublished: onPublished,
+            ),
             minWidth: 200,
             builder: (context, scrollController) {
               return SidebarItems(

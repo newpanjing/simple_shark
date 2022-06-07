@@ -9,7 +9,9 @@ import 'package:simple_shark/utils/avatar.dart';
 import 'login.dart';
 
 class Bottom extends StatefulWidget {
-  const Bottom({Key? key}) : super(key: key);
+
+  final VoidCallback onPublished;
+  const Bottom({Key? key,required this.onPublished}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _BottomState();
@@ -40,7 +42,7 @@ class _BottomState extends State<Bottom> {
                   Text("发布帖子"),
                 ],
               ),
-              onPressed: () {}),
+              onPressed: widget.onPublished),
         const MacosDivider(),
         Consumer<UserModel>(
           builder: (context, counter, child) {
@@ -76,37 +78,40 @@ class _BottomState extends State<Bottom> {
                       ],
                     )
                   ]),
-                  MacosIconButton(
-                      icon: const Icon(CupertinoIcons.clear_circled),
-                      onPressed: () {
-                        showMacosAlertDialog(
-                          context: context,
-                          builder: (context) => MacosAlertDialog(
-                            appIcon: const FlutterLogo(
-                              size: 56,
+                  MacosTooltip(
+                    message: '退出登陆',
+                    child: MacosIconButton(
+                        icon: const Icon(CupertinoIcons.clear_circled),
+                        onPressed: () {
+                          showMacosAlertDialog(
+                            context: context,
+                            builder: (context) => MacosAlertDialog(
+                              appIcon: const FlutterLogo(
+                                size: 56,
+                              ),
+                              title: const Text(
+                                '您确定要退出登陆吗？',
+                              ),
+                              //horizontalActions: false,
+                              primaryButton: PushButton(
+                                buttonSize: ButtonSize.large,
+                                onPressed: () {
+                                  counter.setUserInfo({});
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('确定'),
+                              ),
+                              secondaryButton: PushButton(
+                                buttonSize: ButtonSize.large,
+                                isSecondary: true,
+                                onPressed: Navigator.of(context).pop,
+                                child: const Text('取消'),
+                              ),
+                              message: const Text(""),
                             ),
-                            title: const Text(
-                              '您确定要退出登陆吗？',
-                            ),
-                            //horizontalActions: false,
-                            primaryButton: PushButton(
-                              buttonSize: ButtonSize.large,
-                              onPressed: () {
-                                counter.setUserInfo({});
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('确定'),
-                            ),
-                            secondaryButton: PushButton(
-                              buttonSize: ButtonSize.large,
-                              isSecondary: true,
-                              onPressed: Navigator.of(context).pop,
-                              child: const Text('取消'),
-                            ),
-                            message: const Text(""),
-                          ),
-                        );
-                      }),
+                          );
+                        }),
+                  ),
                 ],
               );
             }

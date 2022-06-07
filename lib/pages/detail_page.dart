@@ -2,15 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:provider/provider.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:simple_shark/components/article_info.dart';
 import 'package:simple_shark/components/divider.dart';
 import 'package:simple_shark/utils/api.dart';
-import 'package:macos_ui/macos_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../components/comment_page.dart';
-import '../model/user.dart';
 
 class DetailPage extends StatefulWidget {
   final int id;
