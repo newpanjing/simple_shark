@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_shark/components/time_button.dart';
@@ -10,10 +11,11 @@ import 'package:uuid/uuid.dart';
 typedef SuccessCallback = void Function(Map<String, dynamic> userInfo);
 
 class LoginWidget extends StatefulWidget {
-
   final SuccessCallback onSuccess;
   final VoidCallback onClose;
-  const LoginWidget({Key? key, required this.onSuccess, required this.onClose}) : super(key: key);
+
+  const LoginWidget({Key? key, required this.onSuccess, required this.onClose})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -98,7 +100,6 @@ class _LoginWidgetState extends State<LoginWidget> {
   }
 
   loginSubmit() {
-
     // var user={"id": 1, "name": "社区小助手", "avatar": "/media/uploads/8SkkOIRI.webp", "verify": true, "verifyDesc": "官方账号", "isStaff": true, "token": "c1e22ede-cf86-440a-9250-92f56e93afd5"};
     // widget.onSuccess(user);
     // widget.onClose();
@@ -137,13 +138,16 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var isDark = MacosTheme.of(context).brightness.isDark;
     return Center(
       child: Container(
         width: 350,
         height: 350,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 255, 255, 255),
+          color: isDark
+              ? HexColor("#252628")
+              : const Color.fromARGB(255, 255, 255, 255),
           borderRadius: BorderRadius.circular(5.0),
         ),
         child: Column(
@@ -173,7 +177,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   },
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.grey,
+                      color: MacosTheme.of(context).dividerColor,
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(4.0),
@@ -188,16 +192,18 @@ class _LoginWidgetState extends State<LoginWidget> {
               children: [
                 Expanded(
                     child: MacosTextField(
-                  keyboardType: TextInputType.number,
-                  placeholder: "请输入图像验证码",
-                  // style: const TextStyle(
-                  //   fontSize: 28,
-                  //   letterSpacing: 1.5
-                  // ),
-                  onChanged: (value) {
-                    verfCode = value;
-                  },
-                )),
+                        keyboardType: TextInputType.number,
+                        placeholder: "请输入图像验证码",
+                        onChanged: (value) {
+                          verfCode = value;
+                        },
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: MacosTheme.of(context).dividerColor,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(4.0),
+                        ))),
                 const SizedBox(
                   width: 10,
                 ),
@@ -220,12 +226,18 @@ class _LoginWidgetState extends State<LoginWidget> {
               children: [
                 Expanded(
                     child: MacosTextField(
-                  placeholder: "请输入短信验证码",
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    smsCode = value;
-                  },
-                )),
+                        placeholder: "请输入短信验证码",
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          smsCode = value;
+                        },
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: MacosTheme.of(context).dividerColor,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(4.0),
+                        ))),
                 const SizedBox(
                   width: 10,
                 ),
@@ -267,7 +279,11 @@ class _LoginWidgetState extends State<LoginWidget> {
 }
 
 showLoginDialog(context, SuccessCallback callback) {
-  showCupertinoDialog(context: context, builder: (context) => LoginWidget(onSuccess: callback,onClose: (){
-    Navigator.of(context).pop();
-  }));
+  showCupertinoDialog(
+      context: context,
+      builder: (context) => LoginWidget(
+          onSuccess: callback,
+          onClose: () {
+            Navigator.of(context).pop();
+          }));
 }

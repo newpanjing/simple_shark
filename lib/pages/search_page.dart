@@ -3,8 +3,10 @@ import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:simple_shark/components/article_item.dart';
+import 'package:simple_shark/components/divider.dart';
 import 'package:simple_shark/pages/detail_page.dart';
 import 'package:simple_shark/utils/api.dart';
 
@@ -29,6 +31,7 @@ class _SearchPageState extends State<SearchPage> {
   int pageCount = 0;
 
   bool loadMore = false;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -46,6 +49,9 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   _loadData() async {
+    setState(() {
+      isLoading = true;
+    });
     Api.search(widget.keyword, currentPage).then((data) {
       setState(() {
         var ds = data["data"];
@@ -62,20 +68,29 @@ class _SearchPageState extends State<SearchPage> {
           loadMore = true;
         }
       });
+    }).whenComplete(() {
+      setState(() {
+        isLoading = false;
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    var isDark = MacosTheme.of(context).brightness.isDark;
     return MacosApp(
       home: MacosScaffold(
         toolBar: ToolBar(
           title: Row(
             children: [
-              MacosBackButton(onPressed: (){
-                Navigator.pop(context);
-              },),
-              SizedBox(width: 10,),
+              MacosBackButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              const SizedBox(
+                width: 10,
+              ),
               Text(widget.keyword),
             ],
           ),
@@ -122,58 +137,94 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                     ),
                   ),
+                  if (isLoading)
+                    SpinKitRing(
+                      lineWidth: 2.0,
+                      color: MacosTheme.of(context).primaryColor,
+                      size: 20.0,
+                    ),
+                  if (items.isEmpty)
+                    Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(20),
+                      child: Text(
+                        '没有找到相关内容',
+                        style: TextStyle(
+                          color: isDark ? Colors.white : Colors.black,
+                        ),
+                      ),
+                    ),
                   Column(
                     children: List.generate(items.length, (index) {
                       var data = items[index];
                       // print(data)
-                      return Material(
-                        child: InkWell(
-                          child: Column(
-                            children: [
-                              Html(
-                                data: data["text"],
-                              ),
-                            ],
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    DetailPage(id: data["id"]),
-                              ),
-                            );
-                          },
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailPage(id: data["id"]),
+                            ),
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                    child: Html(
+                                  data: data["text"],
+                                  style: {
+                                    "*": Style(
+                                      fontSize: const FontSize(14),
+                                      color:
+                                          isDark ? Colors.white : Colors.black,
+                                    ),
+                                    "span": Style(
+                                      fontSize: const FontSize(14),
+                                      color: Colors.red,
+                                    ),
+                                  },
+                                )),
+                                Text(
+                                  "相似度: ${data["score"]}",
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                              ],
+                            ),
+                            const MacosDivider(),
+                          ],
                         ),
                       );
                     }),
                   ),
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      if (loadMore) {
-                        return Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.all(20),
-                          child: CupertinoButton(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Text("加载更多"),
-                                  // CupertinoActivityIndicator(),
-                                ],
-                              ),
-                              onPressed: () {
-                                if (currentPage < pageCount) {
-                                  currentPage++;
-                                  _loadData();
-                                }
-                              }),
-                        );
-                      } else {
-                        return const SizedBox();
-                      }
-                    },
-                  )
+                  if (loadMore)
+                    Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(20),
+                      child: CupertinoButton(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text("加载更多"),
+                              // CupertinoActivityIndicator(),
+                            ],
+                          ),
+                          onPressed: () {
+                            if (currentPage < pageCount) {
+                              currentPage++;
+                              _loadData();
+                            }
+                          }),
+                    ),
                 ],
               ),
             );

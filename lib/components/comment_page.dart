@@ -97,9 +97,12 @@ class _CommentState extends State<CommentPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
+            const Text(
               "评论列表",
-              style: Theme.of(context).textTheme.headline5,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
               textAlign: TextAlign.left,
             ),
             CupertinoButton(

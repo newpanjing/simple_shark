@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_shark/components/html_render.dart';
 import 'package:simple_shark/components/user_info.dart';
 import 'package:simple_shark/model/user.dart';
 
@@ -115,9 +115,7 @@ class _CommentItemState extends State<CommentItem> {
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
           child: Column(children: [
-            SelectableHtml(
-              data: data["contentRendered"],
-            ),
+            HtmlRenderWidget(html: data["contentRendered"]),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -135,9 +133,9 @@ class _CommentItemState extends State<CommentItem> {
                           });
                         }),
                     CupertinoButton(
+                        onPressed: reply,
                         child: Text("️回复(${data["children"].length})",
-                            style: const TextStyle(fontSize: 14)),
-                        onPressed: reply),
+                            style: const TextStyle(fontSize: 14))),
                   ],
                 ),
                 if (userInfo.isNotEmpty && userInfo["isStaff"] as bool)
@@ -270,7 +268,7 @@ class _CommentItemState extends State<CommentItem> {
               padding: const EdgeInsets.all(10),
               child: Container(
                 decoration: BoxDecoration(
-                    color: HexColor("#eeeeee"),
+                    color: isDark ? HexColor("#252628") : HexColor("#eeeeee"),
                     borderRadius: const BorderRadius.all(Radius.circular(5))),
                 child: Padding(
                   padding: const EdgeInsets.all(10),

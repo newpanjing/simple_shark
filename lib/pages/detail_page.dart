@@ -12,6 +12,7 @@ import 'package:simple_shark/utils/api.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../components/comment_page.dart';
+import '../components/html_render.dart';
 import '../utils/dialog.dart';
 
 class DetailPage extends StatefulWidget {
@@ -152,6 +153,8 @@ class _DetailPageState extends State<DetailPage> {
                                       ?.fontSize),
                               maxLines: 2,
                             ),
+
+
                             ArticleInfo(
                               data["user"],
                               date: data["lastReplied"].toString(),
@@ -199,12 +202,7 @@ class _DetailPageState extends State<DetailPage> {
                             const SizedBox(
                               height: 10,
                             ),
-                            SelectableHtml(
-                              style: {
-                                "h1": Style(color: color),
-                              },
-                              data: data["contentRendered"],
-                            ),
+                            HtmlRenderWidget(html: data["contentRendered"]),
                             const SizedBox(
                               height: 10,
                             ),
