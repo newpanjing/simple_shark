@@ -16,15 +16,15 @@
 
 ## 预览图
 
-![](./docs/images/img1.png)
+![](assets/images/img1.png)
 
-![](./docs/images/img2.png)
+![](assets/images/img2.png)
 
-![](./docs/images/img3.png)
+![](assets/images/img3.png)
 
-![](./docs/images/img4.png)
+![](assets/images/img4.png)
 
-![](./docs/images/img5.png)
+![](assets/images/img5.png)
 
 
 ## 下载地址
