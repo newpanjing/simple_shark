@@ -1,22 +1,59 @@
 # simple_shark
 
-A new Flutter project.
+采用`flutter`开发的一个桌面版社区客户端.
 
-## Getting Started
+可以支持以下平台：
++ macOS
++ Windows
++ Linux
++ Web
 
-This project is a starting point for a Flutter application.
+> 当然 iOS和Android也是可以支持的，只不过没有对其进行适配。
 
-A few resources to get you started if this is your first Flutter project:
+## 在线体验
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+[https://shark.72wo.com/](https://shark.72wo.com/)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 预览图
 
-## Running
+![](./docs/images/img1.png)
+
+![](./docs/images/img2.png)
+
+![](./docs/images/img3.png)
+
+![](./docs/images/img4.png)
+
+![](./docs/images/img5.png)
+
+
+## 下载地址
+[https://github.com/newpanjing/simple_shark/releases/](https://github.com/newpanjing/simple_shark/releases/)
+
+## 运行指南
+
++ 安装依赖包
+```shell
+flutter pub get
+```
+
++ 直接运行：
+```shell
+flutter run --no-sound-null-safety
+```
+
++ 构建Release
 
 ```shell
+# 创建一个macOS的Release版本
 flutter run -d macos --no-sound-null-safety
+
+# 创建一个Windows的Release版本
+flutter run -d windows --no-sound-null-safety
+
+# 创建一个linux的Release版本
+flutter run -d linux --no-sound-null-safety
+
+# 创建一个Web的Release版本
+flutter run -d web --no-sound-null-safety
 ```
