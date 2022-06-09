@@ -108,8 +108,11 @@ class _CommentState extends State<CommentPage> {
             CupertinoButton(
                 child: Row(
                   children: const [
-                    Icon(CupertinoIcons.pencil),
-                    Text("撰写评论"),
+                    Icon(CupertinoIcons.pencil, color: Colors.green),
+                    Text(
+                      "撰写评论",
+                      style: TextStyle(color: Colors.green),
+                    ),
                   ],
                 ),
                 onPressed: () {
@@ -142,21 +145,15 @@ class _CommentState extends State<CommentPage> {
             margin: const EdgeInsets.only(top: 10),
             child: Column(
               children: [
-                Material(
-                  child: TextField(
-                    controller: TextEditingController.fromValue(
-                        TextEditingValue(
-                            text: comment,
-                            selection: TextSelection.fromPosition(TextPosition(
-                                affinity: TextAffinity.downstream,
-                                offset: comment.length)))),
-                    maxLines: 3,
-                    decoration: const InputDecoration(
-                      hintText: "请输入评论内容，支持markdown语法",
-                      border: OutlineInputBorder(),
-                    ),
-                    onChanged: (value) => comment = value,
-                  ),
+                CupertinoTextField(
+                  placeholder: "请输入评论",
+                  controller: TextEditingController.fromValue(TextEditingValue(
+                      text: comment,
+                      selection: TextSelection.fromPosition(TextPosition(
+                          affinity: TextAffinity.downstream,
+                          offset: comment.length)))),
+                  maxLines: 3,
+                  onChanged: (value) => comment = value,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

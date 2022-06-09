@@ -205,8 +205,7 @@ class _CommentItemState extends State<CommentItem> {
             if (isShowReply)
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: Material(
-                  child: Column(
+                child: Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -225,7 +224,10 @@ class _CommentItemState extends State<CommentItem> {
                           ),
                         ],
                       ),
-                      TextField(
+                      CupertinoTextField(
+                        minLines: 2,
+                        maxLength: 256,
+                        placeholder: "请输入回复内容",
                         onChanged: (value) {
                           setState(() {
                             replyContent = value;
@@ -239,9 +241,6 @@ class _CommentItemState extends State<CommentItem> {
                                     TextPosition(
                                         affinity: TextAffinity.downstream,
                                         offset: replyContent.length)))),
-                        decoration: InputDecoration(
-                          hintText: "回复：${user["name"]}",
-                        ),
                       ),
                       const SizedBox(
                         height: 10,
@@ -266,7 +265,6 @@ class _CommentItemState extends State<CommentItem> {
                     ],
                   ),
                 ),
-              )
           ]),
         ),
         LayoutBuilder(builder: (context, constraints) {

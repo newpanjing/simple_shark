@@ -71,6 +71,9 @@ class _HtmlRenderWidgetState extends State<HtmlRenderWidget> {
       ".nc": Style(
         color: HexColor("#3f6e75"),
       ),
+      "li": Style(
+        color: HexColor("#3f6e75"),
+      ),
     };
 
     var isDark = MacosTheme.of(context).brightness.isDark;
@@ -109,9 +112,8 @@ class _HtmlRenderWidgetState extends State<HtmlRenderWidget> {
     return Html(
       style: processTheme(),
       data: getHtml(),
-      onLinkTap: (url, a, b, c) {
-        // launchUrl(url);
-        print(url);
+      onLinkTap: (String? url, a, b, c) {
+        launchUrl(Uri.parse(url!));
       },
       onImageTap: (url, a, b, c) {
         // launchUrl(url);
