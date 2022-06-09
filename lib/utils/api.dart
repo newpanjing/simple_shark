@@ -1,8 +1,5 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:http/http.dart' as http;
-import 'package:uuid/uuid.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 const baseName = "https://simpleui.72wo.com/api";
 // const baseName = "http://192.168.31.9:8003/api";
@@ -10,32 +7,29 @@ const baseName = "https://simpleui.72wo.com/api";
 class Api {
   //用户的token
   String token;
+  var headers = {
+    "Content-Type": "application/json",
+    "version": "1.0",
+    "from": "pc-client",
+  };
 
   Api({required this.token});
 
   static get(url) async {
-    var response = await http.get(Uri.parse(baseName + url));
-    return _decode(response);
+    var dio = Dio();
+    var res = await dio.get(baseName + url);
+    return res.data;
   }
 
   post(url, body) async {
-    var response = await http
-        .post(Uri.parse(baseName + url), body: jsonEncode(body), headers: {
-      "Content-Type": "application/json",
-      "token": token,
-      "version": "1.0",
-      "from": "pc-client",
-    });
-    return _decode(response);
-  }
-
-  static _decode(response) {
-    //解析数据
-    if (response.statusCode == 200) {
-      var data = json.decode(response.body);
-      return data;
-    }
-    return json.decode(response.body);
+    var dio = Dio();
+    var res = await dio.post(baseName + url,
+        data: body,
+        options: Options(headers: {
+          ...headers,
+          "token": token,
+        }));
+    return res.data;
   }
 
   /// 获取banner
@@ -123,9 +117,27 @@ class Api {
   getTopicEditData(id) async {
     return post("/topic/edit/data", {"id": id});
   }
+
+  upload(buffer) async {
+    FormData formData = FormData.fromMap(
+        {"file": MultipartFile.fromBytes(buffer, filename: "file.jpg")});
+
+    var res = await Dio().post(
+      "$baseName/upload",
+      data: formData,
+      options: Options(headers: {
+        ...headers,
+        "token": token,
+      }),
+      onSendProgress: (int sent, int total) {
+        debugPrint("uploading: ${sent / total}");
+      },
+    );
+    return res.data;
+  }
 }
 
 void main() async {
-  // var r = await Api.search("simpleui", 1);
-  // print(r);
+  var r = await Api.search("simpleui", 1);
+  print(r);
 }

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:simple_shark/components/html_render.dart';
 import 'package:simple_shark/components/user_info.dart';
 import 'package:simple_shark/model/user.dart';
+import 'package:simple_shark/utils/dialog.dart';
 
 import '../utils/api.dart';
 
@@ -33,7 +34,12 @@ class _CommentItemState extends State<CommentItem> {
   var replyContent = '';
   late Api api;
 
-  reply() {
+  reply(context) {
+    // var userInfo= Provider.of<UserModel>(context).userInfo;
+    // if(userInfo.isEmpty){
+    //   // showErrorDialog(context, "请先登陆！");
+    //   return;
+    // }
     setState(() {
       isPushing = false;
       isShowReply = !isShowReply;
@@ -133,7 +139,9 @@ class _CommentItemState extends State<CommentItem> {
                           });
                         }),
                     CupertinoButton(
-                        onPressed: reply,
+                        onPressed: () {
+                          reply(context);
+                        },
                         child: Text("️回复(${data["children"].length})",
                             style: const TextStyle(fontSize: 14))),
                   ],

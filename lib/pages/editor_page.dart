@@ -191,7 +191,7 @@ class _EditorPageState extends State<EditorPage> {
                   )),
           ResizablePane(
               builder: (context, _) {
-                return Markdown(selectable: true, data: content);
+                return Markdown(selectable: true, data: content,styleSheetTheme: MarkdownStyleSheetBaseTheme.cupertino);
               },
               minWidth: 100,
               resizableSide: ResizableSide.left,

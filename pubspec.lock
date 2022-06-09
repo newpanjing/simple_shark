@@ -85,6 +85,13 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "1.16.0"
+  cross_file:
+    dependency: transitive
+    description:
+      name: cross_file
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "0.3.3+1"
   crypto:
     dependency: transitive
     description:
@@ -106,6 +113,13 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "1.0.4"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "4.0.6"
   effective_dart:
     dependency: transitive
     description:
@@ -141,6 +155,41 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "6.1.2"
+  file_selector:
+    dependency: "direct main"
+    description:
+      name: file_selector
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "0.8.4+2"
+  file_selector_macos:
+    dependency: transitive
+    description:
+      name: file_selector_macos
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "0.8.2+2"
+  file_selector_platform_interface:
+    dependency: transitive
+    description:
+      name: file_selector_platform_interface
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "2.0.4"
+  file_selector_web:
+    dependency: transitive
+    description:
+      name: file_selector_web
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "0.8.1+5"
+  file_selector_windows:
+    dependency: transitive
+    description:
+      name: file_selector_windows
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
+    version: "0.8.2+2"
   flutter:
     dependency: "direct main"
     description: flutter
