@@ -12,7 +12,7 @@
 
 ## 在线体验
 
-[https://shark.72wo.com/](https://shark.72wo.com/)
+[https://newpanjing.github.io/simple_shark/](https://newpanjing.github.io/simple_shark/)
 
 ## 预览图
 
