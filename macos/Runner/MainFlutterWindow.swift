@@ -37,10 +37,12 @@ class MainFlutterWindow: NSWindow {
   }
 
   func windowWillEnterFullScreen(_ notification: Notification) {
+      
       self.toolbar?.isVisible = false
   }
 
   func windowDidExitFullScreen(_ notification: Notification) {
       self.toolbar?.isVisible = true
   }
+
 }

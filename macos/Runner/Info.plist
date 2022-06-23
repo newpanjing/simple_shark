@@ -28,5 +28,16 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.developer-tools</string>
+<!--    <key>com.apple.security.files.user-selected.read-write</key>-->
+<!--    <string></string>-->
+    <key>CFBundleDisplayName</key>
+    <string>Simple社区</string>
+    <key>CFBundleName</key>
+    <string>Simple社区</string>
+    
+    <key>com.apple.developer.aps-environment</key>
+    <string>development</string>
 </dict>
 </plist>
