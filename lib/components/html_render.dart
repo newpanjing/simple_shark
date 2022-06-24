@@ -1,11 +1,16 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:ui';
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:macos_ui/macos_ui.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:simple_shark/utils/html.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:contextual_menu/contextual_menu.dart';
+import 'package:menu_base/src/menu_item.dart' as mi;
 
 class HtmlRenderWidget extends StatefulWidget {
   final String html;
@@ -107,39 +112,74 @@ class _HtmlRenderWidgetState extends State<HtmlRenderWidget> {
     return style;
   }
 
+  late Menu menu;
+
+  @override
+  void initState() {
+    super.initState();
+    menu = Menu(
+      items: [
+        mi.MenuItem(
+          label: '复制',
+          onClick: (_) {
+            Clipboard.setData(ClipboardData(text: widget.html));
+          },
+        ),
+      ],
+    );
+  }
+
+  _onPointerDown(PointerEvent event) {
+    if (event.kind == PointerDeviceKind.mouse &&
+        event.buttons == kSecondaryMouseButton) {
+      popUpContextualMenu(
+        menu,
+        // position: event.position,
+        placement: Placement.bottomLeft,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Html(
-      style: processTheme(),
-      data: getHtml(),
-      onLinkTap: (String? url, a, b, c) {
-        launchUrl(Uri.parse(url!));
-      },
-      onImageTap: (url, a, b, c) {
-        // launchUrl(url);
-        showDialog(
-          context: context,
-          builder: (context) => Center(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return SizedBox(
-                  width: constraints.maxWidth - 100,
-                  height: constraints.maxHeight - 100,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: PhotoView(
-                      backgroundDecoration: const BoxDecoration(
-                        color: Color.fromARGB(0, 255, 255, 255),
+    //  popUpContextualMenu(
+    //       menu,
+    //       placement: Placement.bottomLeft,
+    //     );
+    return Listener(
+      onPointerDown: _onPointerDown,
+      child: Html(
+        style: processTheme(),
+        data: getHtml(),
+        onLinkTap: (String? url, a, b, c) {
+          launchUrl(Uri.parse(url!));
+        },
+        onImageTap: (url, a, b, c) {
+          // launchUrl(url);
+          showDialog(
+            context: context,
+            builder: (context) => Center(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SizedBox(
+                    width: constraints.maxWidth - 100,
+                    height: constraints.maxHeight - 100,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: PhotoView(
+                        backgroundDecoration: const BoxDecoration(
+                          color: Color.fromARGB(0, 255, 255, 255),
+                        ),
+                        imageProvider: NetworkImage(url!),
                       ),
-                      imageProvider: NetworkImage(url!),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

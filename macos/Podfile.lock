@@ -1,4 +1,6 @@
 PODS:
+  - contextual_menu (0.0.1):
+    - FlutterMacOS
   - file_selector_macos (0.0.1):
     - FlutterMacOS
   - FlutterMacOS (1.0.0)
@@ -20,6 +22,7 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
+  - contextual_menu (from `Flutter/ephemeral/.symlinks/plugins/contextual_menu/macos`)
   - file_selector_macos (from `Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - macos_ui (from `Flutter/ephemeral/.symlinks/plugins/macos_ui/macos`)
@@ -34,6 +37,8 @@ SPEC REPOS:
     - FMDB
 
 EXTERNAL SOURCES:
+  contextual_menu:
+    :path: Flutter/ephemeral/.symlinks/plugins/contextual_menu/macos
   file_selector_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos
   FlutterMacOS:
@@ -52,6 +57,7 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/wakelock_macos/macos
 
 SPEC CHECKSUMS:
+  contextual_menu: 6d35fb15942c0d8769f5eae8d3bda653994a6f5a
   file_selector_macos: f1b08a781e66103e3ba279fd5d4024a2478b3af6
   FlutterMacOS: 57701585bf7de1b3fc2bb61f6378d73bbdea8424
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
@@ -62,6 +68,6 @@ SPEC CHECKSUMS:
   url_launcher_macos: 597e05b8e514239626bcf4a850fcf9ef5c856ec3
   wakelock_macos: bc3f2a9bd8d2e6c89fee1e1822e7ddac3bd004a9
 
-PODFILE CHECKSUM: 6eac6b3292e5142cfc23bdeb71848a40ec51c14c
+PODFILE CHECKSUM: a884f6dd3f7494f3892ee6c81feea3a3abbf9153
 
 COCOAPODS: 1.11.3

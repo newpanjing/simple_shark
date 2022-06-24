@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-const baseName = "https://simpleui.72wo.com/api";
-// const baseName = "http://192.168.31.9:8003/api";
+// const baseName = "https://simpleui.72wo.com/api";
+const baseName = "http://192.168.31.9:8003/api";
 
 class Api {
   //用户的token
@@ -134,6 +135,11 @@ class Api {
       },
     );
     return res.data;
+  }
+
+  registerDeviceToken(deviceToken) async {
+    //每次注册，就删除存在的deviceToken
+    return post("/user/device/token", {"token": deviceToken,'isRelease':kReleaseMode});
   }
 }
 

@@ -51,19 +51,38 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Widget> pages = [];
   List<SidebarItem> sidebars = [];
+  late UserModel userModel;
 
   @override
   void initState() {
     super.initState();
-    sidebars.add(const SidebarItem(
-      leading: MacosIcon(CupertinoIcons.home),
-      label: Text('首页'),
-    ));
+    userModel = UserModel(callback: () {
+      sidebars.add(const SidebarItem(
+        leading: MacosIcon(CupertinoIcons.home),
+        label: Text('首页'),
+      ));
 
-    //首页
-    pages.add(const HomePage());
+      //首页
+      pages.add(const HomePage());
 
-    _getData();
+      _getData();
+    });
+  }
+
+  IconData _getIcon(int id) {
+    var mappers = {
+      1: Icons.question_mark_rounded,
+      2: Icons.share_outlined,
+      3: Icons.message_outlined,
+      4: Icons.important_devices,
+      5: Icons.bookmark_outline,
+      6: Icons.list_outlined
+    };
+    if (mappers.containsKey(id)) {
+      return mappers[id] as IconData;
+    } else {
+      return CupertinoIcons.list_bullet;
+    }
   }
 
   _getData() async {
@@ -71,12 +90,13 @@ class _MyHomePageState extends State<MyHomePage> {
       for (var i = 0; i < res.length; i++) {
         var text = res[i]["title"].toString();
         //添加到导航
+        var icon=MacosIcon(_getIcon(res[i]["id"]));
         sidebars.add(SidebarItem(
-          leading: const MacosIcon(CupertinoIcons.list_bullet),
+          leading: icon,
           label: Text(text),
         ));
 
-        pages.add(CategoryPage(id: res[i]["id"], title: res[i]["title"]));
+        pages.add(CategoryPage(id: res[i]["id"], title: res[i]["title"],icon:icon));
       }
       setState(() {});
     });
@@ -94,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
       //跳转到编辑页面
       Navigator.of(context).push(CupertinoPageRoute(
         builder: (context) {
-          return EditorPage();
+          return const EditorPage();
         },
       ));
     }
@@ -103,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserModel>(
-        create: (_) => UserModel(),
+        create: (_) => userModel,
         child: MacosWindow(
           sidebar: Sidebar(
             top: CupertinoSearchTextField(

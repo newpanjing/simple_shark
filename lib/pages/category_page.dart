@@ -9,9 +9,10 @@ late BuildContext bodyContext;
 class CategoryPage extends StatefulWidget {
   final int id;
   final String title;
+  final MacosIcon icon;
   var state = _CategoryPageState();
 
-  CategoryPage({Key? key, required this.id, required this.title})
+  CategoryPage({Key? key, required this.id, required this.title, required this.icon})
       : super(key: key);
 
   getContext() {
@@ -45,6 +46,8 @@ class _CategoryPageState extends State<CategoryPage> {
         toolBar: ToolBar(
           title: Row(
             children: [
+              widget.icon,
+              const SizedBox(width: 5,),
               Text(widget.title),
             ],
           ),

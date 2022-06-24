@@ -39,7 +39,7 @@ class _ArticleItemState extends State<ArticleItem> {
                     Text(
                       widget.data['title'],
                       style: TextStyle(
-                        fontSize: h1?.fontSize,
+                        fontSize: 18,
                         fontWeight: h1?.fontWeight,
                         color: isDark ? HexColor("#dddede") : Colors.black,
                       ),

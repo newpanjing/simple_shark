@@ -26,7 +26,7 @@ class MainFlutterWindow: NSWindow {
     self.isOpaque = false
 //     self.backgroundColor = .clear
 
-    self.setContentSize(NSSize(width: 900,height: 500))
+    self.setContentSize(NSSize(width: 900,height: 600))
     RegisterGeneratedPlugins(registry: flutterViewController)
 
     super.awakeFromNib()
